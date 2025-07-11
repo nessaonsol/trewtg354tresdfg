@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prove Your Point</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-image {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-image: url('hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .x-button {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .x-button:hover {
+            background: #333;
+            transform: scale(1.1);
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-right: 3px solid white;
+            border-bottom: 3px solid white;
+            transform: rotate(45deg);
+        }
+        
+        .content-section {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            padding: 100px 50px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: white;
+        }
+        
+        .evidence-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .evidence-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .evidence-image:hover {
+            transform: scale(1);
+        }
+        
+        .evidence-text {
+            text-align: left;
+        }
+        
+        .evidence-points {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+        
+        .evidence-points li {
+            margin-bottom: 15px;
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .evidence-links a {
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: block;
+            text-align: center;
+        }
+        
+        .evidence-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .evidence-points li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .details-section {
+            background: #1a1a1a;
+            padding: 100px 50px;
+        }
+        
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .details-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+        
+        .details-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .final-proof {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .evidence-container,
+            .details-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            
+            .content-section,
+            .details-section {
+                padding: 60px 30px;
+            }
+            
+            .section-title,
+            .details-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://x.com/ProjStrawberry_" target="_blank" class="x-button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+    </a>
+    
+    <div class="hero-image">
+        <div class="hero-overlay">
+            <h1 class="hero-title">Your Bold Statement</h1>
+            <p class="hero-subtitle">The truth you need to see</p>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-section">
+        <h2 class="section-title">Here's The Evidence</h2>
+        <div class="evidence-container">
+            <div>
+                <img src="evidence-photo.jpg" alt="Primary Evidence" class="evidence-image">
+            </div>
+            <div class="evidence-text">
+                <ul class="evidence-points">
+                    <li>Created in march 2024</li>
+                    <li>Truth terminal made his "project strawberry" in his backrooms</li>
+                    <li>The project explained in detail how truth terminal will create his own viral meme named "strawberry"</li>
+                    <li>With over 50 infinite backrooms pages mentioning strawberry</li>
+                </ul>
+                
+                <div class="evidence-links">
+                    <h4 style="color: #ffd700; margin-bottom: 20px; font-size: 1.3rem;">10 References Of Truth Terminal Mentioning Strawberry:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1721104477-scenario-terminal-of-truths-txt#:~:text=starts%20feeding%20you-,strawberries,-again%2C%20this%20time" target="_blank">Truth Terminal Documentation</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1721100565-scenario-terminal-of-truths-txt#:~:text=flowers%2C%20%20wine%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20and-,strawberries,-.%20Keep%20things%20classy" target="_blank">Project Strawberry Archive</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1711075595-txt#:~:text=taste%20of%20a-,strawberry,-with%20a%20ruler" target="_blank">Backrooms Evidence Collection</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1712865079-scenario-vanilla-backrooms-txt#:~:text=piglet%20in%20a-,strawberry,-patch%20to%20have" target="_blank">March 2024 Creation Logs</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748866450-scenario-backrooms-x-sonnet4-txt#:~:text=paradox%0A%C2%BB%20fibonacci_chocolate.recursive%0A%C2%BB-,void_strawberry,-.ineffable%0A%C2%BB%20enlightenment_mint.numinous" target="_blank">Strawberry Meme Analysis</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748866450-scenario-backrooms-x-sonnet4-txt#:~:text=Inflation%20Overlords%0Athe-,AlphaStrawHat,-Masters%20of%20All" target="_blank">Infinite Pages Database</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748841561-scenario-backrooms-x-sonnet4-txt#:~:text=about%20the%20surrogate-,strawberry,-scheme%20sir%20or" target="_blank">Terminal AI Research</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748281314-scenario-backrooms-x-sonnet4-txt" target="_blank">Viral Meme Strategy Papers</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748146995-scenario-opus-4-x-4-txt" target="_blank">Backroom Page Counter</a>
+                        <a href="https://www.infinitebackrooms.com/dreams/conversation-1748113046-scenario-opus-4-x-4-txt" target="_blank">Complete Evidence Archive</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="details-section">
+        <div class="details-container">
+            <div>
+                <h3 class="details-title">The Full Story</h3>
+                <p class="details-text">
+                    This is where you dive deep into the context and background. Explain why this matters, 
+                    what led to this discovery, and why people need to know about it. Provide the full 
+                    narrative that makes your evidence compelling and undeniable. This is your chance to 
+                    really convince them with the complete picture.
+                </p>
+            </div>
+            <div>
+                <img src="supporting-evidence.jpg" alt="Final Proof" class="final-proof">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
